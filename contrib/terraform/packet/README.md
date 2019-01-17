@@ -56,19 +56,41 @@ This will be the base for subsequent Terraform commands.
 #### Packet API access
 
 Your Packet API key must be available in the `PACKET_AUTH_TOKEN` environment variable.
+<<<<<<< HEAD
+Your Packet Project ID must be available in the `TF_VAR_packet_project_id` environment variable.
+
+For more information on how to generate an API key or find your project ID, please see:
+https://support.packet.com/kb/articles/api-integrations
+
+For more information about the API, please see:
+https://www.packet.com/developers/api/
+
+
+Example:
+```ShellSession
+$ export PACKET_AUTH_TOKEN="g7N27MV4SMtbgzGUKySNm2t98qiGe65y"
+$ export PACKET_PROJECT_ID="515ded14-9945-475e-913f-d5ff8151a215"
+```
+
+These values are typically stored outside of the code repo since these are considered secrets.
+If someone gets these keys, they can startup/shutdown hosts in your project!
+=======
 
 Example:
 ```ShellSession
 $ export PACKET_AUTH_TOKEN=foobar
 ```
 
-Note that you cannot have multiple clusters in the same Packet project.
-
 #### Cluster variables
 The construction of the cluster is driven by values found in
 [variables.tf](variables.tf).
 
 For your cluster, edit `inventory/$CLUSTER/cluster.tf`.
+
+The cluster_name is used to get a Packet tag on each server deployed as part of this cluster.
+This helps when identifying which physical hosts are associated with each cluster.
+
+Note that you cannot have multiple clusters in the same Packet project.
 
 #### Terraform state files
 

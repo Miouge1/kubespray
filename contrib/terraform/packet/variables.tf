@@ -2,7 +2,13 @@ variable "cluster_name" {
   default = "kubespray"
 }
 
-variable "project_id" {}
+variable "packet_auth_token" {
+  default = "TF_VAR_packet_auth_token environment variable is not defined"
+}
+
+variable "packet_project_id" {
+  default = "TF_VAR_packet_project_id environment variable is not defined"
+}
 
 variable "operating_system" {
   default = "ubuntu_16_04"
