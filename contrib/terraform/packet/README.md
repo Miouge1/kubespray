@@ -5,7 +5,7 @@ Provision a Kubernetes cluster with [Terraform](https://www.terraform.io) on
 
 ## Status
 
-This will install a Kubernetes cluster on Packet bare metal. It should work in all locations and on most hardware.
+This will install a Kubernetes cluster on Packet bare metal. It should work in all locations and on most server types.
 
 ## Approach
 The terraform configuration inspects variables found in
@@ -37,7 +37,7 @@ now six total etcd replicas.
 - you have an SSH key pair
 
 ## Terraform
-Terraform will be used to provision all of the PAcket resources with base software as appropriate.
+Terraform will be used to provision all of the Packet resources with base software as appropriate.
 
 ### Configuration
 
@@ -55,8 +55,7 @@ This will be the base for subsequent Terraform commands.
 
 #### Packet API access
 
-Your Packet API key must be available in the `PACKET_AUTH_TOKEN` environment variable.
-<<<<<<< HEAD
+Your Packet API key must be available in the `TF_VAR_packet_auth_token` environment variable.
 Your Packet Project ID must be available in the `TF_VAR_packet_project_id` environment variable.
 
 For more information on how to generate an API key or find your project ID, please see:
@@ -74,6 +73,7 @@ $ export PACKET_PROJECT_ID="515ded14-9945-475e-913f-d5ff8151a215"
 
 These values are typically stored outside of the code repo since these are considered secrets.
 If someone gets these keys, they can startup/shutdown hosts in your project!
+
 =======
 
 Example:
