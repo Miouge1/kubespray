@@ -22,6 +22,12 @@ resource "packet_device" "k8s_master" {
 
 }
 
+resource "packet_bgp_session" "k8s_master" {
+    count          = "${var.use_bgp * var.number_of_k8s_masters}"
+    device_id      = "${element(packet_device.k8s_master.*.id, count.index)}"
+    address_family = "ipv4"
+}
+
 resource "packet_device" "k8s_master_no_etcd" {
   depends_on = ["packet_ssh_key.k8s"]
 
@@ -59,4 +65,18 @@ resource "packet_device" "k8s_node" {
   billing_cycle    = "${var.billing_cycle}"
   project_id       = "${var.packet_project_id}"
   tags             = ["cluster-${var.cluster_name}", "k8s-cluster", "kube-node"]
+}
+
+resource "packet_bgp_session" "k8s_node" {
+    count          = "${var.use_bgp * var.number_of_k8s_nodes}"
+    device_id      = "${element(packet_device.k8s_node.*.id, count.index)}"
+    address_family = "ipv4"
+}
+
+# IP blocks
+
+resource "packet_reserved_ip_block" "metallb_addr" {
+    project_id = "${var.packet_project_id}"
+    facility = "${var.facility}"
+    quantity = "${var.size_ip_block}"
 }

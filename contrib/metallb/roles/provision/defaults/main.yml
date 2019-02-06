@@ -5,3 +5,9 @@ metallb:
     cpu: "100m"
     memory: "100Mi"
   port: "7472"
+  bgp:
+    my-asn: 65000
+    peer-asn: 65530
+    password: ExamplePassword1234 # Feed from group_var
+    pools:
+      - 139.178.69.8/31 # Feed from terraform

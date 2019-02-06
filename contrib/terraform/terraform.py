@@ -45,8 +45,9 @@ def iterresources(filenames):
             state = json.load(json_file)
             for module in state['modules']:
                 name = module['path'][-1]
+                outputs = {k: v['value'] for k, v in module['outputs'].items()}
                 for key, resource in module['resources'].items():
-                    yield name, key, resource
+                    yield name, key, resource, outputs
 
 ## READ RESOURCES
 PARSERS = {}
@@ -60,19 +61,21 @@ def _clean_dc(dcname):
 
 def iterhosts(resources):
     '''yield host tuples of (name, attributes, groups)'''
-    for module_name, key, resource in resources:
+    for module_name, key, resource, outputs in resources:
         resource_type, name = key.split('.', 1)
         try:
             parser = PARSERS[resource_type]
         except KeyError:
             continue
-
-        yield parser(resource, module_name)
+        name, attr, group = parser(resource, module_name)
+        attr_with_ouputs = attr.copy()
+        attr_with_ouputs.update(outputs)
+        yield name, attr_with_ouputs, group
 
 
 def iterips(resources):
     '''yield ip tuples of (instance_id, ip)'''
-    for module_name, key, resource in resources:
+    for module_name, key, resource, outputs in resources:
         resource_type, name = key.split('.', 1)
         if resource_type == 'openstack_compute_floatingip_associate_v2':
             yield openstack_floating_ips(resource)
@@ -243,6 +246,7 @@ def packet_device(resource, tfvars=None):
         'ipv6_address': raw_attrs['network.1.address'],
         'public_ipv6': raw_attrs['network.1.address'],
         'private_ipv4': raw_attrs['network.2.address'],
+        'private_ipv4_gateway': raw_attrs['network.2.gateway'],
         'provider': 'packet',
     }
 

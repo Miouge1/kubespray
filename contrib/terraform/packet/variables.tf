@@ -54,3 +54,11 @@ variable "number_of_etcd" {
 variable "number_of_k8s_nodes" {
   default = 0
 }
+
+variable "use_bgp" {
+  default = 0
+}
+
+variable "size_ip_block" {
+  default = 2
+}

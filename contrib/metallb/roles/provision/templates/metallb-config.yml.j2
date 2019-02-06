@@ -7,7 +7,27 @@ metadata:
 data:
   config: |
     address-pools:
+    # L2 Config
+    {% if metallb.ip_range -%}
     - name: loadbalanced
       protocol: layer2
       addresses:
       - {{ metallb.ip_range }}
+    {% endif -%}
+
+    # BGP Config
+    {% if metallb.bgp -%}
+    - name: bgp
+      protocol: bgp
+      addresses: {{ metallb.bgp.pools | to_json }}
+    peers:
+    {% for node in groups['kube-node'] -%}
+    - peer-address: {{ hostvars[node].private_ipv4_gateway }}
+      peer-asn: {{ metallb.bgp['peer-asn'] | default(65530) }}
+      my-asn: {{ metallb.bgp['my-asn'] | default(65000) }}
+      password: {{ metallb.bgp.password }}
+      node-selectors:
+      - match-labels:
+          kubernetes.io/hostname: "{{ hostvars[node].inventory_hostname }}"
+    {% endfor -%}
+    {% endif -%}
