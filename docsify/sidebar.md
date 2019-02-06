@@ -1,9 +1,22 @@
 * [Readme](/)
+* [Comparaison](/docs/comparison.md)
 * [Getting started](/docs/getting-started.md)
 * [Variables](/docs/vars.md)
+* [Ansible](/docs/ansible.md)
+* [Upgrades](/docs/upgrades.md)
 * CNI
   * [Calico](docs/calico.md)
+  * [Contiv](docs/contiv.md)
+  * [Flannel](docs/flannel.md)
   * [Weave](docs/weave.md)
-* Cloud providers
+  * [Multus](docs/multus.md)
+* [Cloud providers](docs/cloud.md)
+  * [AWS](docs/aws.md)
+  * [Azure](docs/azure.md)
   * [OpenStack](/docs/openstack.md)
   * [vSphere](/docs/vsphere.md)
+* Operating Systems
+  * [Debian](docs/debian.md)
+  * [Coreos](docs/coreos.md)
+  * [OpenSUSE](docs/opensuse.md)
+* [Roadmap](docs/roadmap.md)

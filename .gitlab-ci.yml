@@ -4,6 +4,7 @@ stages:
   - deploy-part1
   - deploy-part2
   - deploy-special
+  - docs
 
 variables:
   FAILFASTCI_NAMESPACE: 'kargo-ci'
@@ -740,3 +741,20 @@ tox-inventory-builder:
     - cd contrib/inventory_builder && tox
   when: manual
   except: ['triggers', 'master']
+
+pages:
+  <<: *job
+  stage: docs
+  variables:
+    LOG_LEVEL: "Info" # Reset logrus loglevel settings
+  script:
+  - mkdir public
+  - cp README.md public/
+  - cp -r docs public
+  - cp -r docsify public
+  - cp index.html public/
+  artifacts:
+    paths:
+    - public
+  only:
+  - master
