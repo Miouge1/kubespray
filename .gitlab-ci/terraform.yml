@@ -2,6 +2,9 @@
 # Tests for contrib/terraform/
 .terraform_install:
   extends: .job
+  variables:
+    PUBLIC_KEY: $PACKET_PUBLIC_KEY
+    PRIVATE_KEY: $PACKET_PRIVATE_KEY
   before_script:
     - ./tests/scripts/rebase.sh
     - ./tests/scripts/testcases_prepare.sh
@@ -13,11 +16,6 @@
     - cd inventory/$CLUSTER
     - ln -s ../../contrib/terraform/$PROVIDER/hosts
     - terraform init ../../contrib/terraform/$PROVIDER
-    # Copy SSH keypair
-    - mkdir -p ~/.ssh
-    - echo "$PACKET_PRIVATE_KEY" | base64 -d > ~/.ssh/id_rsa
-    - chmod 400 ~/.ssh/id_rsa
-    - echo "$PACKET_PUBLIC_KEY" | base64 -d > ~/.ssh/id_rsa.pub
 
 .terraform_validate:
   extends: .terraform_install

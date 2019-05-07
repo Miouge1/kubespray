@@ -5,6 +5,10 @@ $(HOME)/.ssh/id_rsa:
 	echo $(PRIVATE_KEY) | base64 -d > $(HOME)/.ssh/id_rsa
 	chmod 400 $(HOME)/.ssh/id_rsa
 
+$(HOME)/.ssh/id_rsa.pub:
+	mkdir -p $(HOME)/.ssh
+	echo $(PUBLIC_KEY) | base64 -d > $(HOME)/.ssh/id_rsa.pub
+
 init-gce: $(HOME)/.ssh/id_rsa
 	# echo $(GCE_PEM_FILE) | base64 -d > $(HOME)/.ssh/gce
 	echo "$(GCE_CREDENTIALS_B64)" | base64 -d > $(HOME)/.ssh/gce.json
@@ -16,7 +20,7 @@ init-packet:
 	echo $(PACKET_VM_SSH_PRIVATE_KEY) | base64 -d > $(HOME)/.ssh/id_rsa
 	chmod 400 $(HOME)/.ssh/id_rsa
 
-create-tf:
+create-tf:  $(HOME)/.ssh/id_rsa  $(HOME)/.ssh/id_rsa.pub
 	./scripts/create-tf.sh
 
 delete-tf:
