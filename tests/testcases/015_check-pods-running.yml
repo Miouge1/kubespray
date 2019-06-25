@@ -17,7 +17,8 @@
     register: get_pods
     no_log: true
 
-  - debug:
+  - name: "Debug | Check kubectl output"
+    debug:
       msg: "{{ get_pods.stdout.split('\n') }}"
 
   - name: Check that all pods are running and ready
@@ -38,6 +39,7 @@
     register: get_pods
     no_log: true
 
-  - debug:
+  - name: "Debug | Check that all pods are running and ready"
+    debug:
       msg: "{{ get_pods.stdout.split('\n') }}"
     failed_when: not run_pods_log is success

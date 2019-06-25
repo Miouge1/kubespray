@@ -53,7 +53,8 @@
         - netchecker-agent-hostnet
       when: not nca_pod is success
 
-    - debug:
+    - name: "Debug | Get netchecker pods"
+      debug:
         var: nca_pod.stdout_lines
       failed_when: not nca_pod is success
       run_once: true
@@ -73,7 +74,8 @@
       failed_when: false
       no_log: true
 
-    - debug:
+    - name: "Debug | Get netchecker agents"
+      debug:
         var: agents.content | from_json
       failed_when: not agents is success and not agents.content=='{}'
       run_once: true
@@ -99,7 +101,8 @@
       when:
         - agents.content != '{}'
 
-    - debug:
+    - name: "Debug | Check netchecker status"
+      debug:
         var: ncs_pod
       run_once: true
       when: not result is success
@@ -127,7 +130,8 @@
         - calico-node
         - cilium
 
-    - debug:
+    - name: "Debug | Check netchecker status"
+      debug:
         var: result.content | from_json
       failed_when: not result is success
       run_once: true
@@ -136,7 +140,8 @@
         - result.content
         - result.content[0] == '{'
 
-    - debug:
+    - name: "Debug | Check netchecker status"
+      debug:
         var: result
       failed_when: not result is success
       run_once: true
