@@ -8,8 +8,16 @@ lint:
   options:
     config-file: ../../../.yamllint
 platforms:
-  - name: kubespray-docker
+  - name: ubuntu1804
     box: generic/ubuntu1804
+    cpus: 2
+    memory: 1024
+  - name: centos7
+    box: centos/7
+    cpus: 2
+    memory: 1024
+  - name: centos8
+    box: centos/8
     cpus: 2
     memory: 1024
 provisioner:

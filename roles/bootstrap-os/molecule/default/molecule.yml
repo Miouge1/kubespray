@@ -10,10 +10,34 @@ driver:
   provider:
     name: libvirt
 platforms:
+  # Debian
+  - name: debian9
+    box: debian/stretch64
+    cpus: 2
+    memory: 1024
+  - name: debian10
+    box: debian/buster64
+    cpus: 2
+    memory: 1024
+  # Ubuntu
+  - name: ubuntu16
+    box: generic/ubuntu1604
+    cpus: 2
+    memory: 1024
   - name: ubuntu18
     box: generic/ubuntu1804
     cpus: 2
-    memory: 2048
+    memory: 1024
+  # Centos etc...
+  - name: centos7
+    box: centos/7
+    cpus: 2
+    memory: 1024
+  # opensuse
+  - name: opensuse-leap
+    box: bento/opensuse-leap-15.1
+    cpus: 2
+    memory: 1024
 provisioner:
   name: ansible
   lint:
