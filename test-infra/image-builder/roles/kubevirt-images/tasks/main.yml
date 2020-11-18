@@ -59,4 +59,4 @@
     - "{{ images }}"
 
 - name: docker logout  # noqa 301
-  command: docker logout -u="{{ docker_user }}" "{{ docker_host }}"
+  command: docker logout "{{ docker_host }}"
